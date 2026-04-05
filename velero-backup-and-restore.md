@@ -138,7 +138,7 @@ sudo sh -c 'echo "This is velero backup and restore documentation" > /data/nginx
 **Browser Verification:**
 `http://192.168.1.101:30007/`
 
-*Screenshot placeholder: cluster-A-browser-image*
+![cluster-A-browser-image](cluster-A-browser-image.png)
 
 ---
 
@@ -223,6 +223,8 @@ sudo ETCDCTL_API=3 etcdctl snapshot save /home/kube/etcd-snapshot/clustera-etcd-
 
 *Screenshot placeholder: cluster-A-nginx-resources*
 
+![cluster-A-nginx-resources](cluster-A-nginx-resources.png)
+
 ---
 
 ## 7. Cluster-B Setup and Etcd Restore
@@ -262,12 +264,11 @@ kubectl get pods,pv,pvc,svc
 **Browser Verification:**
 `http://192.168.1.201:30007/` → Shows `403 Forbidden`
 
-*Screenshot placeholder: cluster-B-browser-image-before-velero-backup*
+![cluster-B-browser-image-before-velero-backup](cluster-B-browser-image-before-velero-backup.png)
 
 > Note: ETCD restore restores only Kubernetes resources, **not PV data**.
 
-*Screenshot placeholder: cluster-B-resources-after-etcd-restore*
-
+![cluster-B-resources-after-etcd-restore](cluster-B-resources-after-etcd-restore.png)
 ---
 
 ## 8. Velero Restore on Cluster-B
@@ -296,9 +297,11 @@ velero restore create my-restore --from-backup clustera-velero-backup --wait
 
 *Screenshot placeholders:*
 
-* cluster-B-velero-restore
-* cluster-B-worker-pv-data-restored
-* cluster-B-browser-image-after-velero-backup
+![cluster-B-velero-restore](cluster-B-velero-restore.png)
+![cluster-B-worker-pv-data-restored](cluster-B-worker-pv-data-restored.png)
+![cluster-B-browser-image-after-velero-backup](cluster-B-browser-image-after-velero-backup.png)
+
+
 
 ---
 
