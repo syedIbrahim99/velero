@@ -227,13 +227,11 @@ sudo ETCDCTL_API=3 etcdctl snapshot save /home/kube/etcd-snapshot/clustera-etcd-
 
 ## 7. Cluster-B Setup and Etcd Restore
 
-### 7.1 Install etcd-client and velero
+### 7.1 Install etcd-client
 
 ```bash
 sudo apt install etcd-client -y
 ```
-
-- Follow the steps which we have used in `Cluster-A` setup.
 
 ### 7.2 Restore ETCD Snapshot
 
@@ -286,7 +284,21 @@ kubectl delete service/nginx-service
 
 Reapply the PV manifest manually.
 
+## Velero installation in Cluster-B
+
+- Follow the steps which we have used in `Cluster-A` setup.
+
 ### 8.3 Restore Velero Backup
+
+**Check Backup Status:**
+
+```bash
+velero get backup
+```
+
+| NAME                   | STATUS    | STORAGE LOCATION |
+| ---------------------- | --------- | ---------------- |
+| clustera-velero-backup | Completed | default          |
 
 ```bash
 velero restore create my-restore --from-backup clustera-velero-backup --wait
@@ -304,6 +316,5 @@ velero restore create my-restore --from-backup clustera-velero-backup --wait
 
 
 ---
-
 
 
