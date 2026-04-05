@@ -221,19 +221,19 @@ sudo ETCDCTL_API=3 etcdctl snapshot save /home/kube/etcd-snapshot/clustera-etcd-
   --key=/etc/kubernetes/pki/etcd/server.key
 ```
 
-*Screenshot placeholder: cluster-A-nginx-resources*
-
 ![cluster-A-nginx-resources](cluster-A-nginx-resources.png)
 
 ---
 
 ## 7. Cluster-B Setup and Etcd Restore
 
-### 7.1 Install etcd-client
+### 7.1 Install etcd-client and velero
 
 ```bash
 sudo apt install etcd-client -y
 ```
+
+- Follow the steps which we have used in `Cluster-A` setup.
 
 ### 7.2 Restore ETCD Snapshot
 
@@ -295,7 +295,7 @@ velero restore create my-restore --from-backup clustera-velero-backup --wait
 **Browser Verification:**
 `http://192.168.1.201:30007/` → Shows restored content
 
-*Screenshot placeholders:*
+
 
 ![cluster-B-velero-restore](cluster-B-velero-restore.png)
 ![cluster-B-worker-pv-data-restored](cluster-B-worker-pv-data-restored.png)
@@ -304,7 +304,6 @@ velero restore create my-restore --from-backup clustera-velero-backup --wait
 
 
 ---
-
 
 
 
