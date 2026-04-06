@@ -1,6 +1,6 @@
 
 
-# Velero Backup and Restore: 
+# Backup and Restore kubernetes cluster using Etcd and Velero:
 
 ---
 
