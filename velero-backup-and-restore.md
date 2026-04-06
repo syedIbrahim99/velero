@@ -40,96 +40,20 @@ sudo apt install etcd-client -y
 
 ## 3. Nginx Deployment with PV and PVC
 
-### 3.1 Deployment YAML
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx-deployment
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      containers:
-        - name: nginx
-          image: nginx:latest
-          volumeMounts:
-            - name: nginx-storage
-              mountPath: /usr/share/nginx/html
-      volumes:
-        - name: nginx-storage
-          persistentVolumeClaim:
-            claimName: nginx-pvc
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: nginx-pv
-spec:
-  capacity:
-    storage: 5Gi
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: local-storage
-  persistentVolumeReclaimPolicy: Retain
-  local:
-    path: /data/nginx-data
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-                - worker-hm-1
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: nginx-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: local-storage
-  resources:
-    requests:
-      storage: 5Gi
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-service
-spec:
-  type: NodePort
-  selector:
-    app: nginx
-  ports:
-    - port: 80
-      targetPort: 80
-      nodePort: 30007
-```
-
-### 3.2 Node Preparations
+### 3.1 Node Preparations
 
 ```bash
 kubectl label node worker-hm-1 node-type=worker-hm-1
 sudo mkdir -p /data/nginx-data
 ```
 
-### 3.3 Apply Manifest
+### 3.2 Apply Manifest
 
 ```bash
 kubectl apply -f deployment.yaml
 ```
 
-### 3.4 Add Content to Nginx
+### 3.3 Add Content to Nginx
 
 ```bash
 sudo sh -c 'echo "This is velero backup and restore documentation" > /data/nginx-data/index.html'
@@ -316,5 +240,4 @@ velero restore create my-restore --from-backup clustera-velero-backup --wait
 
 
 ---
-
 
